@@ -1,0 +1,1 @@
+/Users/luoqb/Documents/workspace/android/MyApplication/app/build/intermediates/cxx/RelWithDebInfo/553k4rd5/obj/x86

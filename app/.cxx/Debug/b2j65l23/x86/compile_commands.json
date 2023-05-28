@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/Users/luoqb/Documents/workspace/android/MyApplication/app/.cxx/Debug/b2j65l23/x86",
+  "command": "/Users/luoqb/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=i686-none-linux-android24 --sysroot=/Users/luoqb/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Dexample_EXPORTS -I/Users/luoqb/Documents/workspace/android/MyApplication/app/src/main/cpp/opencv/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -std=c++11 -fno-limit-debug-info  -fPIC -o CMakeFiles/example.dir/native-lib.cpp.o -c /Users/luoqb/Documents/workspace/android/MyApplication/app/src/main/cpp/native-lib.cpp",
+  "file": "/Users/luoqb/Documents/workspace/android/MyApplication/app/src/main/cpp/native-lib.cpp"
+}
+]

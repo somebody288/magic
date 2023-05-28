@@ -1,0 +1,29 @@
+{
+  "buildFiles": [
+    "/Users/luoqb/Documents/workspace/android/MyApplication/app/src/main/cpp/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/luoqb/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/luoqb/Documents/workspace/android/MyApplication/app/.cxx/RelWithDebInfo/553k4rd5/x86",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/luoqb/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/luoqb/Documents/workspace/android/MyApplication/app/.cxx/RelWithDebInfo/553k4rd5/x86",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "example::@6890427a1f51a3e7e1df": {
+      "artifactName": "example",
+      "abi": "x86",
+      "output": "/Users/luoqb/Documents/workspace/android/MyApplication/app/build/intermediates/cxx/RelWithDebInfo/553k4rd5/obj/x86/libexample.so",
+      "runtimeFiles": [
+        "/Users/luoqb/Documents/workspace/android/MyApplication/app/src/main/jniLibs/x86/libopencv_java4.so"
+      ]
+    }
+  }
+}
