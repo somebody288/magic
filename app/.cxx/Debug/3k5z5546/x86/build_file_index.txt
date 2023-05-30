@@ -1,1 +1,0 @@
-/Users/luoqb/Documents/workspace/android/MyApplication/app/src/main/cpp/CMakeLists.txt

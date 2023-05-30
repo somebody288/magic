@@ -1,3 +1,0 @@
-/Users/luoqb/Documents/workspace/android/MyApplication/app/.cxx/Debug/3k5z5546/x86/CMakeFiles/example.dir
-/Users/luoqb/Documents/workspace/android/MyApplication/app/.cxx/Debug/3k5z5546/x86/CMakeFiles/edit_cache.dir
-/Users/luoqb/Documents/workspace/android/MyApplication/app/.cxx/Debug/3k5z5546/x86/CMakeFiles/rebuild_cache.dir

@@ -1,7 +1,0 @@
-[
-{
-  "directory": "D:/time/MyApplication/app/.cxx/Debug/2i6z2y25/x86",
-  "command": "\"D:\\Program Files\\Android\\sdk\\ndk\\25.1.8937393\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe\" --target=i686-none-linux-android24 --sysroot=\"D:/Program Files/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/windows-x86_64/sysroot\" -Dexample_EXPORTS -ID:/time/MyApplication/app/src/main/cpp/opencv/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -fno-limit-debug-info  -fPIC -o CMakeFiles\\example.dir\\native-lib.cpp.o -c D:\\time\\MyApplication\\app\\src\\main\\cpp\\native-lib.cpp",
-  "file": "D:\\time\\MyApplication\\app\\src\\main\\cpp\\native-lib.cpp"
-}
-]
