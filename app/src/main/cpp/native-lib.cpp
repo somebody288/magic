@@ -1,6 +1,6 @@
 #include <jni.h>
 #include <string>
-#include "utils.hpp"
+#include "utils/utils.hpp"
 
 
 void binaryImage(Mat &src);

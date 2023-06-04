@@ -1,11 +1,11 @@
 
-#include "opencv/include/opencv2/core.hpp"
-#include "opencv/include/opencv2/imgproc.hpp"
+#include "../opencv/include/opencv2/core.hpp"
+#include "../opencv/include/opencv2/imgproc.hpp"
 
 #ifdef __ANDROID__
 
-#include <android/bitmap.h>
-#include "android/log.h"
+#include "../../../../../../../../tools/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/android/bitmap.h"
+#include "../../../../../../../../tools/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/android/log.h"
 
 #define TAG "org.opencv.android.Utils"
 #define LOGV(...) __android_log_print(ANDROID_LOG_VERBOSE, TAG, __VA_ARGS__)
