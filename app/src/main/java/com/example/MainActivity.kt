@@ -19,8 +19,8 @@ class MainActivity : AppCompatActivity() {
 
         // Example of a call to a native method
         binding.sampleText.text = stringFromJNI()
-        binding.btn2.setOnClickListener{
-            val bitMap = BitmapFactory.decodeResource(resources,R.drawable.img);
+        binding.btn2.setOnClickListener {
+            val bitMap = BitmapFactory.decodeResource(resources,R.drawable.aaa);
             coverImg2Gray(bitMap);
             binding.img.setImageBitmap(bitMap)
         }
