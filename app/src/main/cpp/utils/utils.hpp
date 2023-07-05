@@ -4,8 +4,8 @@
 
 #ifdef __ANDROID__
 
-#include "../../../../../../../../tools/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/android/bitmap.h"
-#include "../../../../../../../../tools/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/android/log.h"
+#include <android/bitmap.h>
+#include "android/log.h"
 
 #define TAG "org.opencv.android.Utils"
 #define LOGV(...) __android_log_print(ANDROID_LOG_VERBOSE, TAG, __VA_ARGS__)
@@ -14,7 +14,6 @@
 #define LOGW(...) __android_log_print(ANDROID_LOG_WARN, TAG, __VA_ARGS__)
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, TAG, __VA_ARGS__)
 using namespace cv;
-using namespace std;
 
 void BitmapToMat(JNIEnv *env, jobject bitmap, Mat &dst, jboolean needUnPremultiplyAlpha) {
     AndroidBitmapInfo info;

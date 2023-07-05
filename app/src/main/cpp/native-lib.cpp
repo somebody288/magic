@@ -4,7 +4,7 @@
 
 
 void binaryImg(Mat &src, Mat &binaryImage);
-void clipImg(Mat &grayImage,Mat &dist);
+void clipImg(Mat &src,Mat &dist);
 void parseLine(Mat &src);
 void rotateImg(Mat &src,Mat &dst,double angle);
 
@@ -27,14 +27,15 @@ Java_com_example_MainActivity_coverImg2Gray(
 
     cv::Mat imageSource,clipImage,binaryImage,rotateImage,grayImage;
     BitmapToMat(env,bitmap,imageSource, JNI_FALSE);
-    cvtColor(imageSource, grayImage, COLOR_BGR2GRAY );
+
     //裁剪
-    clipImg(grayImage,clipImage);
+    clipImg(imageSource,clipImage);
     //二值化
     binaryImg(clipImage,binaryImage);
     //解析
     rotateImg(binaryImage,rotateImage ,-1.8);
-    parseLine(rotateImage);
+    cvtColor(rotateImage, grayImage, COLOR_BGR2GRAY);
+    parseLine(grayImage);
     MatToBitmap(env,rotateImage,bitmap, JNI_FALSE);
 }
 
@@ -43,48 +44,16 @@ Java_com_example_MainActivity_coverImg2Gray(
  * @param grayImage
  * @return
  */
-void clipImg(Mat &grayImage,Mat &dist) {
-    dist = grayImage;
+void clipImg(Mat &src,Mat &dist) {
+    dist = src;
 }
 
 void binaryImg(Mat &src,Mat &binaryImage) {
-//    Mat hsv,splitImg;
-//    cvtColor(src,hsv,COLOR_BGR2HSV);
-//    split(hsv,splitImg);
-    threshold(src,binaryImage,100,255,THRESH_BINARY);
-
-//    int rows = src.rows;
-//    int cols = src.cols;
-//    int dims = src.channels();
-//    int tempIndex = 5;
-//    for (int row = 0; row < rows; row++) {
-//        for (int col = 0; col < cols; col++) {
-//            if (dims == 1) {
-//                int sum = 0;
-//                for (int i = 0; i < tempIndex; i++) {
-//                    if (col < cols) {
-//                        int tmpPv = src.at<uchar>(row, col + i);
-//                        sum = sum + tmpPv;
-//                    } else {
-//                        break;
-//                    }
-//                }
-//                double avg = sum / tempIndex;
-//                int value ;
-//                if (avg < 127) { // 变成黑色
-//                    value = 0;
-//                } else {
-//                    value = 255;
-//                }
-//                src.at<uchar>(row, col) = value;
-////                LOGI("单通道 %d",  src.at<uchar>(row, col));
-//            }
-////            if (dims == 3) {
-////                Vec3b bgr = src.at<Vec3b>(row, col);
-////                LOGI("单通道 b->%s,r->%s,g->%s",bgr[0],bgr[1],bgr[2]);
-////            }
-//        }
-//    }
+    Mat hsv;
+    std::vector<Mat> channels;
+    cvtColor(src,hsv,COLOR_BGR2HSV);
+    split(hsv,channels);
+    threshold(channels.at(2),binaryImage,100,255,THRESH_BINARY);
 }
 
 void rotateImg(Mat &image,Mat &dst, double angle) {
