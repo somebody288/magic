@@ -2,11 +2,12 @@
 #include <string>
 #include "utils/utils.hpp"
 
-
 void binaryImg(Mat &src, Mat &binaryImage);
 void clipImg(Mat &src,Mat &dist);
 void parseLine(Mat &src);
 void rotateImg(Mat &src,Mat &dst,double angle);
+
+void analysis(std::vector<int> tmpCols);
 
 extern "C"
 JNIEXPORT jstring JNICALL
@@ -34,8 +35,8 @@ Java_com_example_MainActivity_coverImg2Gray(
     binaryImg(clipImage,binaryImage);
     //解析
     rotateImg(binaryImage,rotateImage ,-1.8);
-    cvtColor(rotateImage, grayImage, COLOR_BGR2GRAY);
-    parseLine(grayImage);
+//    cvtColor(rotateImage, grayImage, COLOR_BGR2GRAY);
+    parseLine(rotateImage);
     MatToBitmap(env,rotateImage,bitmap, JNI_FALSE);
 }
 
@@ -77,29 +78,30 @@ void rotateImg(Mat &image,Mat &dst, double angle) {
 void parseLine(Mat &src) {
     int rows = src.rows;
     int cols = src.cols;
-    int dims = src.channels();
-    int tempIndex = 24;
 
     for (int row = 0; row < rows; row++) {
-        for (int col = 0; col < cols; ) {
-//            if (dims == 1) {
-//                int sum = 0;
-//                for (int i = 0; i < tempIndex; i++) {
-//                    if (col < cols) {
-//                        int tmpPv = src.at<uchar>(row, col + i);
-//                        sum = sum + tmpPv;
-//                    } else {
-//                        break;
-//                    }
-//                }
-//                if (sum == 0) {
-//                    LOGI(" 标识->1");
-//                } else {
-//                    LOGI(" 标识->0");
-//                }
-//                col += tempIndex;
-//            }
+        std::vector<int> tmpCols;
+        for (int col = 0; col < cols; col++) {
+            int tmpPv = src.at<uchar>(row, col);
+            tmpCols.push_back(tmpPv);
         }
+        analysis(tmpCols);
         LOGI("-------------------------");
     }
+}
+
+void analysis(std::vector<int> tmpCols){
+    // 统一每一个像素点占了多少
+    int count=1,val;
+    for (int i = 0; i < tmpCols.size(); ++i) {
+        int tmpPx = tmpCols[i];
+        if (val == tmpPx) {
+            count++;
+        } else {
+            LOGI("px-> %d,%d",val,count);
+            val = tmpPx;
+            count = 1;
+        }
+    }
+
 }
