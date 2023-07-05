@@ -1,5 +1,7 @@
 #include <jni.h>
 #include <string>
+#include <iostream>
+#include <altivec.h>
 #include "utils/utils.hpp"
 
 void binaryImg(Mat &src, Mat &binaryImage);
@@ -47,6 +49,34 @@ Java_com_example_MainActivity_coverImg2Gray(
  */
 void clipImg(Mat &src,Mat &dist) {
     dist = src;
+//    Mat imgGray,sobelX,sobelXAbs,blurredSobelXAbs,threshSobelX,sobelY,
+//        sobelYAbs,blurredSobelYAbs,threshSobelY,sobelXY,thresh,blurred,closed;
+//    cvtColor(src, imgGray, COLOR_BGR2GRAY);
+//    Sobel(imgGray,sobelX,CV_32F,1,0,-1);
+//    convertScaleAbs(sobelX,sobelXAbs);
+//    cv::blur(sobelXAbs,blurredSobelXAbs,cv::Size(3,3));
+//    threshold(blurredSobelXAbs,threshSobelX,0,255,THRESH_BINARY+THRESH_OTSU);
+//
+//    Sobel(imgGray,sobelY,CV_32F,0,1,-1);
+//    convertScaleAbs(sobelY,sobelYAbs);
+//    cv::blur(sobelYAbs,blurredSobelYAbs,cv::Size(3,3));
+//    threshold(blurredSobelYAbs,threshSobelY,0,255,THRESH_BINARY+THRESH_OTSU);
+//    bitwise_and(threshSobelX,threshSobelY,sobelXY);
+//    thresh = sobelXY;
+//    blur(sobelXY,blurred,Size(7,7));
+//    threshold(blurred,thresh,0,255,THRESH_BINARY+THRESH_OTSU);
+//    Mat kernel = getStructuringElement(MORPH_RECT,Size(51,51));
+//    morphologyEx(thresh,closed,MORPH_CLOSE,kernel);
+//    kernel = Mat::ones(Size(15,15),CV_8U);
+//    erode(closed,closed,kernel,Point(-1,-1),5);
+//    dilate(closed,closed,kernel,Point(-1,-1),5);
+//    std::vector<std::vector<Point>> contours;
+//    findContours(closed,contours,RETR_EXTERNAL,CHAIN_APPROX_SIMPLE);
+//    if (contours.size() == 0){
+//        return;
+//    }
+//    std::max(contours,contourArea);
+
 }
 
 void binaryImg(Mat &src,Mat &binaryImage) {
@@ -86,22 +116,36 @@ void parseLine(Mat &src) {
             tmpCols.push_back(tmpPv);
         }
         analysis(tmpCols);
-        LOGI("-------------------------");
     }
 }
 
 void analysis(std::vector<int> tmpCols){
-    // 统一每一个像素点占了多少
-    int count=1,val;
-    for (int i = 0; i < tmpCols.size(); ++i) {
+    int count=1;
+    int upVal = -1;
+    std::string ma;
+    for (int i = 0; i < tmpCols.size(); i++) {
         int tmpPx = tmpCols[i];
-        if (val == tmpPx) {
-            count++;
+        if (upVal == -1){
+            upVal = tmpPx;
+            continue;
         } else {
-            LOGI("px-> %d,%d",val,count);
-            val = tmpPx;
-            count = 1;
+            if (upVal == tmpPx) {
+                upVal = tmpPx;
+                count ++;
+                if (count == 50) {
+                    if (tmpPx == 255) {
+                        ma = ma +"0";
+                    }
+                    if (tmpPx == 0){
+                        ma = ma +"1";
+                    }
+                    count = 1;
+                }
+            } else {
+                upVal = -1;
+                count = 1;
+            }
         }
     }
-
+    LOGI("---");
 }
