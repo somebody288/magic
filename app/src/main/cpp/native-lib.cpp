@@ -1,7 +1,6 @@
 #include <jni.h>
 #include <string>
 #include <iostream>
-#include <altivec.h>
 #include "utils/utils.hpp"
 
 void binaryImg(Mat &src, Mat &binaryImage);
@@ -9,7 +8,7 @@ void clipImg(Mat &src,Mat &dist);
 void parseLine(Mat &src);
 void rotateImg(Mat &src,Mat &dst,double angle);
 
-void analysis(std::vector<int> tmpCols);
+void analysis(Mat &mat);
 
 extern "C"
 JNIEXPORT jstring JNICALL
@@ -35,6 +34,7 @@ Java_com_example_MainActivity_coverImg2Gray(
     clipImg(imageSource,clipImage);
     //二值化
     binaryImg(clipImage,binaryImage);
+    resize(binaryImage,binaryImage,Size(600,480));
     //解析
     rotateImg(binaryImage,rotateImage ,-1.8);
 //    cvtColor(rotateImage, grayImage, COLOR_BGR2GRAY);
@@ -94,8 +94,10 @@ void rotateImg(Mat &image,Mat &dst, double angle) {
     double radian = angle * CV_PI / 180.;
     // 角度转换为弧度
     double width_rotate = fabs(width * cos(radian)) + fabs(height * sin(radian));
-    double height_rotate = fabs(width * sin(radian)) + fabs(height * cos(radian));//旋转中心 原图像中心点
-    cv::Point2f center((float) width / 2.0, (float) height / 2.0);//旋转矩阵
+    double height_rotate = fabs(width * sin(radian)) + fabs(height * cos(radian));
+    //旋转中心 原图像中心点
+    cv::Point2f center((float) width / 2.0, (float) height / 2.0);
+    //旋转矩阵
     Mat m1 = cv::getRotationMatrix2D(center, angle,1.0);
     // m1为2行3列通道数为1的矩阵
     // 变换矩阵的中心点相当于平移一样 原图像的中心点与新图像的中心点的相对位置
@@ -109,43 +111,27 @@ void parseLine(Mat &src) {
     int rows = src.rows;
     int cols = src.cols;
 
-    for (int row = 0; row < rows; row++) {
-        std::vector<int> tmpCols;
-        for (int col = 0; col < cols; col++) {
-            int tmpPv = src.at<uchar>(row, col);
-            tmpCols.push_back(tmpPv);
-        }
-        analysis(tmpCols);
+    for (int row = 0; row < 100; row++) {
+        uchar* output = src.ptr<uchar>(row);
+        Mat mat = cv::Mat(10,cols, CV_8U);
+        mat.data = output;
+        analysis(mat);
     }
 }
 
-void analysis(std::vector<int> tmpCols){
-    int count=1;
-    int upVal = -1;
-    std::string ma;
-    for (int i = 0; i < tmpCols.size(); i++) {
-        int tmpPx = tmpCols[i];
-        if (upVal == -1){
-            upVal = tmpPx;
-            continue;
-        } else {
-            if (upVal == tmpPx) {
-                upVal = tmpPx;
-                count ++;
-                if (count == 50) {
-                    if (tmpPx == 255) {
-                        ma = ma +"0";
-                    }
-                    if (tmpPx == 0){
-                        ma = ma +"1";
-                    }
-                    count = 1;
-                }
-            } else {
-                upVal = -1;
-                count = 1;
-            }
-        }
+void analysis(Mat &src){
+    Mat cannyImage;
+    Canny(src, cannyImage, 100, 255, 3);
+    //在得到的二值图像中寻找轮廓
+    std::vector<std::vector<Point>> contours;
+    std::vector<Vec4i> hierarchy;
+    findContours(cannyImage, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE, Point(0, 0));
+    //输出所有轮廓的矩
+    for (int i = 0; i < (int)contours.size(); i++) {
+        double d = contourArea(contours[i]);
+        LOGI("用矩计算出来的第 %d 个轮廓的面积为 %f",i,d);
     }
+
+    cannyImage.release();
     LOGI("---");
 }
